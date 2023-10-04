@@ -92,7 +92,7 @@ E' possibile suddividere il dominio in elementi ed in ciascuno di essi utiizzare
 \begin{equation}
 	[u^{(e)}]_n= \sum_{i=1}^{r}\boldsymbol{N}_i^{(e)}[\boldsymbol{d}_i^{(e)}]_n
 \end{equation}
-nella quale per il nodo locale \textit{i} dell'elemento \textit{e} $\boldsymbol{N}_i^{(e)}=N_i^{(e)}\boldsymbol{I}_2$ è la funzione di forma e $[\boldsymbol{d}_i^{(e)}]_n$ è il vettore degli spostamenti nodali. Nel seguito si considereranno elementi isoparametrici a 4, 8 e 9 nodi, cioè \textit{r}=4,8 e 9.
+nella quale per il nodo locale \textit{i} dell'elemento \textit{e} $\boldsymbol{N}_i^{(e)}=N_i^{(e)}\boldsymbol{I}_2$ è la funzione di forma e $[\boldsymbol{d}_i^{(e)}]_n$ è il vettore degli spostamenti nodali. Nel seguito si considereranno elementi isoparametrici a 4, 8 e 9 nodi, cioè $\textit{r}=4,8 e 9$.
 
 La relazione deformazione spostamento a livello di singolo elemento si esprime nel modo seguente:
 \begin{equation}
@@ -102,9 +102,11 @@ nella quale $\boldsymbol{B}_i^{(e)}$ è la matrice delle deformazioni locale, ch
 \[
 \begin{array}{cccc}
 	\toprule
-	Application   & \boldsymbol{d}_i^{(e)}     & \boldsymbol{B}_i^{(e)} & d\varOmega^{(e)} \\
+	Application               & \boldsymbol{d}_i^{(e)}     & \boldsymbol{B}_i^{(e)}     & d\varOmega^{(e)}                             \\
 	\midrule
-	Plane Stress  & \input{fragments/tab_1_1}  & J                      &        gg        \\
+	\text{Tesioni Piane}      & \input{fragments/tab_1_1}  & \input{fragments/tab_1_2}  & t^{(e)} det \mathbf{J}^{(e)} d\xi d\eta      \\
+	\text{Deformazioni Piane} & \input{fragments/tab_1_1}  & \input{fragments/tab_1_2}  & det \mathbf{J}^{(e)} d\xi d\eta              \\
+	\text{Assialsimmetria}    & \input{fragments/tab_3_2}  & \input{fragments/tab_3_3}  & 2\pi r^{(e)} det \mathbf{J}^{(e)} d\xi d\eta \\
 	\bottomrule
 \end{array}
 \]
