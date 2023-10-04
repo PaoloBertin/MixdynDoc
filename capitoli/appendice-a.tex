@@ -1,0 +1,276 @@
+\appendix
+\chapter{Istruzioni per la preparazione dei dati di input per problemi dinamici }
+Il programma MIXDYN effettua analisi dinamiche 2D in stato piano di tensione, stato piano di deformazione e assialsimmetrici per problemi non lineari per geometria e materiale. Si presenta di seguito il formato richiesto per i dati in input.
+
+\begin{tabular}{rll}
+	Set Record 1 & Dati generali (4i5)            & Un record                                         \\
+	Col.  1-5    & NPOIN                          & Total number of nodal points                      \\
+	6-10         & NELEM                          & Total number of elements                          \\
+	11-15        & NDOFN                          & Number degree of freedom per node                 \\
+	16-20        & NMATS                          & Numero set materiale                              \\
+	             &                                &                                                   \\	             
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 2 & Titolo (a40)                   & Un record                                         \\
+	Col. 1-40    &                                & Titolo problema     	                          \\
+	             &                                &                                                   \\	             
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 3 & Dati generali (13i5            & Un record                                         \\
+	Col. 1-5     & NVFIX                          & Numero nodi vincolati                             \\
+	6-10         & NTYPE                          & Tipo problema:                                    \\
+	             &                                & = 1, Stato piano di tensione                      \\
+	             &                                & = 2, Stato piano di deformazione                  \\
+	             &                                & = 3, Problema assialsimmetrico                    \\
+	11-15        & NNODE                          & Numero nodi per elemento                          \\
+	16-20        & NPROP                          & Numero proprietà materiali                        \\
+	21-25        & NGAUS                          & Regola integrazione matrice rigidezza             \\
+	             &                                & matrice di rigidezza                              \\
+	26-30        & NDIME                          & Numero coordinate (=2)                            \\
+	31-35        & NSTRE                          & Numero componenti tensione                        \\
+	             &                                & (=3 per stati piani tens. e def.)                 \\
+	             &                                & (=4 per problemi assialsimmetrici)                \\
+	36-40        & NCRIT                          & Criterio di snervameto:                           \\
+	             &                                & = 1 - Tresca              	                      \\
+	             &                                & = 2 - Von Mises                  	              \\
+	             &                                & = 3 - Mohr-Coulomb                                \\
+	             &                                & = 4 - Drucker-Prager                              \\
+	41-45        & NPREV                          & Indicatore lettura stato precedente               \\
+	46-50        & NCONM                          & Numero masse concentrate                          \\
+	51-55        & NLAPS                          & Indicatore tipo analisi:                          \\
+	             &                                & = 0 - Analisi elastica                            \\
+	             &                                & = 1 - Analisi elasto-plastica piccoli spostamenti \\
+	             &                                & = 2 - Analisi elastica in grandi spostamenti      \\
+	56-60        & NGAUM                          & Regola integrazione matrice masse                 \\         
+	61-65        & NRADS                          & = 0 - coordinate $(r, z)$                         \\
+	             &                                & = 1 - coordinate $(R, \varTheta)$                 \\
+	             &                                &                                                   \\	             
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 4 & Definizione elementi (11i5)    & Un record per elemento. Numerazione antioraria    \\
+	Col.  1-5    & IELEM                          & numero elemento                                   \\
+	6-10         & MATNO                          & numero materiale                                  \\
+	11-15        & LNODS()IELEM,1)                &                                                   \\
+	16-20        & LNODS()IELEM,2)                &                                                   \\
+	21-25        & LNODS()IELEM,3)                &                                                   \\
+	26-30        & LNODS()IELEM,4)                & Connessioni nodali                                \\
+	31-35        & LNODS()IELEM,5)                &                                                   \\
+	36-40        & LNODS()IELEM,6)                &                                                   \\
+	41-45        & LNODS()IELEM,7)                &                                                   \\
+	46-50        & LNODS()IELEM,8)                &                                                   \\
+	51-55        & LNODS()IELEM,9)                &                                                   \\
+	             &                                &                                                   \\	             
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 5 & Coordinate nodali(i5,2F10.5)   & Un record per nodo. Deve essere definito l'ultimo.\\
+	Col. 1-5     & IPOIN                          & Numero nodo                                       \\
+	6-15     & COORD(IPOIN, 1)                & Coordinata x, nodo IPOIN                          \\
+	16-15     & COORD(IPOIN, 2)                & Coordinata y, nodo IPOIN                          \\
+	&                                &                                                   \\	             
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 6 & Vincoli nodali(i5, 3X, 2I1)    & Un record per nodo vinclato.                      \\
+	Col. 1-5     & IPOIN                          & Numero nodo                                       \\
+	9     & IFPRE(IVFIX, 1)                & Vincolo direzione x (=0 Free, =1 Vincolato)       \\
+	10     & IFPRE(IVFIX, 2)                & Vincolo direzione y (=0 Free, =1 Vincolato)       \\
+	&                                &                                                   \\	             
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 7 & Materiali                      & Tre record per materiale.                         \\
+	Record 1     & Numero materiale (i5)          &                                                   \\
+	Col. 1-5     & NUMAT                          & Numero materiale                                  \\
+	Record 2     & Proprietà materiiale (8e10.4)  &                                                   \\
+	Col. 1-10    & PROPS(NUMAT, 1)                & Modulo di Young, E                                \\
+	11-20    & PROPS(NUMAT, 2)                & Coef. Poisson, $\nu$                              \\
+	21-30    & PROPS(NUMAT, 3)                & Spessore t, (Stato piano tensioe)                 \\
+	31-40    & PROPS(NUMAT, 4)                & Densità $\varrho$                                 \\
+	41-50    & PROPS(NUMAT, 5)                & Dilatazione termica $\alpha$                      \\
+	51-60    & PROPS(NUMAT, 6)                & $F_0$ :                                           \\
+	&                                & Von Mises, $F_0=\sigma_Y$                         \\
+	&                                & Tresca,    $F_0=\sigma_Y$                         \\
+	&                                & Mohr-Coulomb, $F_0=c \cos \phi$                   \\
+	&                                & Drucker-Prager, $6c\cos\phi/(\sqrt{3}(3-\sin\phi))$\\
+	61-70    & PROPS(NUMAT, 7)                & Parametro incrudimento $H^{'}$                    \\
+	&                                & $H^{'}=\frac{E_T}{1-E_T/E}$\\
+	71-80    & PROPS(NUMAT, 8)                & Angolo attrito $\phi$                             \\
+	Record 3     & Proprietà materiiale (3e10.4)  &                                                   \\
+	Col. 1-10    & PROPS(NUMAT,  9)               & Parametro fluidità $\gamma$                       \\
+	11-20    & PROPS(NUMAT, 10)               & Esponente $\delta$                                \\
+	21-30    & PROPS(NUMAT, 11)               & Codice NFLOW                                      \\
+	&                                & NFLOW = 1, funzione potenza                       \\
+	&                                & NFLOW $\neq 1$, funzione esponenziale             \\	             
+	&                                &                                                   \\	             
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 8 & Integrazione nel tempo (11i5)  & Un record                                         \\
+	Col.  1-5    & NSTEP                          & Numero passi intgrazoone                          \\
+	6-10    & NOUTD                          & Num. passi dopo i quali salvare spost. e tesioni  \\
+	11-15    & NOUTP                          & Num. passi dopo i quali salvare tutti spos. e tens.\\
+	16-20    & NREQD                          & Num. nodi output spostamneti selettivo            \\
+	21-25    & NREQS                          & Num. punti output tensini selettivo               \\
+	26-30    & NACCE                          & Numero ordinate accelerazione (Se IFUNC=0)        \\
+	31-35    & IFUNC                          & Codice forzante                                   \\
+	&                                & IFUNC=0, storia temporale accelerazione           \\
+	&                                & IFUNC=1, forzante a gradino                       \\
+	&                                & IFUNC=2, forzante armonica $f(f)=a_0+b_0\sin\omega t$\\
+	36-40    & IFIXD                          & IFIXD=0 acc. oriz. unità 7, acc. vert. unità 12   \\
+	&                                & IFIXD=1 acc. vert. unità 12                       \\
+	&                                & IFIXD=2 acc. oriz. unità 7                        \\
+	41-45    & MITER                          & Numero massimo iterazioni                         \\
+	46-50    & KSTEP                          & Numero passi dopo i quali calcolare mat. rigidezza\\
+	51-55    & IPRED                          & = 1 Algoritmo standard                            \\
+	&                                & = 2 Algoritmo modificato                          \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 9 & Param. integr. nel tempo(8f10.3)& Due record                                       \\
+	Record 1     &                                &                                                   \\
+	Col. 1-10    & DTIME                          & Lunghezza passo temporale                         \\
+	11-20    & DTEND                          & Durata forzante                                   \\
+	21-30    & DTREC                          & Passo temporale accelearazione forzante           \\
+	31-40    & AALFA                          & $\alpha=$ par. smorzamento, $C=\alpha M$,         \\
+	&                                & $\alpha=2\xi_i\omega_i$\\
+	41-50    & BBETA                          & $\beta =$ par. smorzamento, $C=\beta K$,          \\
+	&                                & $\alpha+\beta\omega_i^2=2\xi_i\omega_i$           \\
+	51-60    & DELTA                          & Param. integ. Newmark, $\delta=0.25(\gamma+0.5)^2$\\
+	61-70    & GAAMA                          & Param. integ. Newmark $(\gamma>0.5)$ per sol. stab.\\
+	71-80    & AZERO                          &                                                   \\
+	Record 2     &                                & Costanti per $f(f)=a_0+b_0\sin{\omega t}$         \\
+	Col. 1-10    & BZERO                          &                                                   \\
+	11-20    & OMEGA                          &                                                   \\
+	21-30    & TOLER                          &                                                   \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 10& Nodi con spost. in output(16i5)& Un record                                         \\
+	Col.  1-5    & NPRQD(1)                       & 1° punto con storia temporale spostamento         \\
+	6-10         & NPRQD(2)                       & 2° punto con storia remporale spostamento         \\
+	11-15        & \dots                          &                                                   \\
+	&                                             &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 11& Nodi con tens. in output (16i5)& Un record                                         \\
+	Col.  1-5    & NGRQS(1)                       & 1° punto con storia temporale tesione             \\
+	6-10    & NGRQS(2)                       & 2° punto con storia remporale tensione            \\
+	11-15        & \dots                          &                                                   \\
+	&                                             &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 12& Tipo elemento impl.-espl.      & Un record per elemento                            \\
+	Col.  1-5    & INTGR(IELEM)                   & = 1, elemento implicito                           \\
+	&                                & = 2, elemento esplicito                           \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 13& Spostamenti nodali(i5, 2f10.3) & Un record per nodo con spostamento assegnato      \\
+	Col.  1-5    & NGASH                          & Nodo                                              \\
+	6-15    & XGASH                          & spostyamento iniziale lungo x                     \\
+	16-25    & YGASH                          & spostyamento iniziale lungo y                     \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 14& Velocità nodali(i5, 2f10.3)    & Un record per nodo con velocità assegnata         \\
+	Col.  1-5    & NGASH                          & Nodo                                              \\
+	6-15    & XGASH                          & velocità iniziale lungo x                         \\
+	16-25    & YGASH                          & velocità iniziale lungo y                         \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 15& Carichi nod. equiv.(i5, 2f10.3)& Un record per nodo                                \\
+	Col.  1-5    & NGASH                          & Nodo                                              \\
+	6-15    & XGASH                          & Carico nodale equivalente dir. x                  \\
+	16-25    & YGASH                          & Carico nodale equivalente dir. y                  \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 16& Coazione elastica (i5, 4f10.3) & Un record                                         \\
+	Col.  1-5    & KGAUS                          & Punto integrazione                                \\
+	6-15    & STRESS(1)                      & tensione iniziale $\sigma_x$ o $\sigma_r$         \\
+	16-25    & STRESS(2)                      & tensione iniziale $\sigma_y$ o $\sigma_z$         \\
+	26-35    & STRESS(3)                      & tensione iniziale $\gamma_{xy}$ o $\gamma_{rz}$   \\
+	36-45    & STRESS(4)                      & tensione iniziale $\sigma_z$ o $\sigma_\vartheta$ \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 17& Titolo (a40)                   & Un record                                         \\
+	Col. 1-40    & Titolo condizione di carico    &                                                   \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 18& Indicatore carichi esterni(4i5)& Un record                                         \\
+	Col. 1-5     & IPLOD                          & Indicatore carico concentrato                     \\
+	6-10     & IGRAV                          & Indicatore carico gravitazionale                  \\
+	11-15     & IEDGE                          & Indicatore carico superficiale                    \\
+	16-20     & ITEMP                          & Indicatore carico termico                         \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 19& Carichi concentrati (i5,2f10.3)& Un record. Se IPLOD = 0 no record                 \\
+	Col. 1-5     & LODPT                          & Numero nodo                                       \\
+	6-15     & POINT(1)                       & Componente carico in direzione x                  \\
+	16-25     & POINT(2)                       & Componente carico in direzione y                  \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 20& Forze di volume (2f10.3)       & Un record.  Se IGRAV = 0 no record                \\
+	Col. 1-10    & THETA                          & Angolo tra direzione forze volume e asse y        \\
+	11-15    & GRAVY                          & Valore forze di gravità                           \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 21& Numero forze di superficie     & Un record. Se IEDGE = 0 no record                 \\
+	Col.  1-5    & NEDGE                          &  \\	
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 22& Forze di superficie            & Due record per carico superficiale                \\
+	Record 1     & Nodi carico superficiale(4i5)  &                                                   \\
+	Col.  1-5    & NEASS                          & Numero elemento con carico di bordo               \\
+	6-10    & NOPRS(1)                       &                                                   \\
+	11-15    & NOPRS(2)                       & Nodi (senso antiorario)  bordo caricato           \\
+	16-20    & NOPRS(3)                       &                                                   \\
+	Record 2     & Forza superficiale (6f10.3)    &                                                   \\
+	Col. 1-10    & PRESS(1,1)                     &                                                   \\
+	11-20    & PRESS(2,1)                     & Componenti normale forza superficie               \\
+	21-30    & PRESS(3,1)                     &                                                   \\
+	31-40    & PRESS(1,2)                     &                                                   \\
+	41-50    & PRESS(2,2)                     & Componenti tangenziale forza superficie           \\
+	51-60    & PRESS(3,2)                     &                                                   \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 24& Temperature nodali (i5, f10.3) & Un record per nodo con temperatura assegnata      \\
+	Col.  1-5    & NODPT                          & Nodo                                              \\
+	6-15    & TEMPE                          & Temperatura                                       \\
+	&                                &                                                   \\
+\end{tabular}
+
+\begin{tabular}{rll}
+	Set Record 25& Masse concentrate (i5, 2f10.3) & Un record per nodo con massa assegnata            \\
+	Col.  1-5    & IPOIN                          & Nodo                                              \\
+	6-15    & XCMAS                          & Massa concentrata dir. x                          \\
+	16-25    & YCMAS                          & Massa concentrata dir. y                          \\
+	&                                &                                                   \\
+\end{tabular}

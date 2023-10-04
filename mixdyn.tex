@@ -1,0 +1,42 @@
+\documentclass[a4paper, 10pt]{report}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage[italian]{babel}
+\usepackage{lipsum}
+\usepackage{microtype}
+\usepackage{amsmath}
+\usepackage{amssymb}
+\usepackage{booktabs}
+\usepackage{caption}
+\usepackage{appendix}
+\usepackage{url}
+\usepackage{caption}
+\usepackage{siunitx}
+
+\includeonly{
+	% capitoli/preliminari,
+	% capitoli/analisi-deformazione,
+	% capitoli/analisi-tensione,
+	% capitoli/teorema-lavori-virtuali,
+	% capitoli/legami-costitutivi,
+	% capitoli/metodo-elementi-finiti,
+	capitoli/analisi-dinamica,
+	% apitoli/appendice-a,
+	% capitoli/appendice-b,
+	% capitoli/bibliografia
+}
+
+\begin{document}
+	
+\include{capitoli/preliminari}
+\include{capitoli/analisi-deformazione}
+\include{capitoli/analisi-tensione}
+\include{capitoli/teorema-lavori-virtuali}
+\include{capitoli/legami-costitutivi}
+\include{capitoli/metodo-elementi-finiti}
+\include{capitoli/analisi-dinamica}
+\include{capitoli/appendice-a}
+\include{capitoli/appendice-b}
+\include{capitoli/bibliografia}
+
+\end{document}

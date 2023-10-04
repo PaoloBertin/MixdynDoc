@@ -1,0 +1,452 @@
+\chapter{Equazioni Costitutive}
+\section{Introduzione}
+Si considera di seguito il legame costitutivo elasto-plastico
+
+\section{Teoria matematica della plasticità}
+Il modello matematico elastoplastico stabilisce una relazione tra tensione e deformazione caraterizzato da deformazioni irreversibili qualora lo stato di ensione raggiunga un determinato livello della tensione. Tale modello si basa su tre ipotesi fondamentali:
+\begin{itemize}
+	\item Un legame di tipo elastico tra deformazioe e tensione prima di entrare al di sotto di una detrminata soglia della tensione.
+	\item  Un criterio di snervamento che definisce la soglia della tensione oltre la quale si hanno deformazioni plastiche.
+	\item Una relazione tra tensione e deformazione in campo plastico
+\end{itemize}
+	
+Prima dello snervamento si considera una relazione lineare tra tensione e deformazione:
+\begin{equation}
+	\sigma_{ij} = C_{ijkl} \epsilon_{kl}
+\end{equation}	
+nella quale $\sigma_{ij}$ e $\epsilon_{kl}$ stanno ad indicare, rispettivamente le componenti della tensione e della deformazione e $C_{ijkl}$ è il tensore delle costanti elastiche, che, nel caso di matriale isotropo, risulta essere:
+\begin{equation}
+	C_{ijkl} = \lambda \delta_{ij} \delta_{kl} + \mu \delta_{ik} \delta_{jl} + \mu \delta_{il} \delta_{jk}
+\end{equation}	
+nella quale $\lambda$ e $\mu$ sono le costanti di Lamé e $\delta_{ij}$ è la $\delta$ di Kronecker, data da:
+\begin{equation}
+	\delta_{ij} =
+	\begin{cases}
+		1 & \text{se $i = j$} \\
+		0 & \text{se $i \neq j$}
+	\end{cases}
+\end{equation}
+	
+\section{Criteri di snervamento}
+Il criterio di snervamento determina il livello della tensione al quale inizia la deformazione plastica e, nella forma generale, si scrive:
+\begin{equation}
+	f(\sigma_{ij}) = k(\kappa)
+\end{equation}
+nella quale $\kappa$ è un parametro del materiale da determinarsi sperimentalmente. Da un punto di vista fisico, il criterio di snervamento è indipendente dal sistema di riferimento scelto. Quindi, è esprimibile attraverso gli invarianti della tensione:
+\begin{equation}
+\begin{split}
+	J_1 & = \sigma_{ii}                                     \\
+	J_2 & = \frac{1}{2}\sigma_{ij} \sigma_{ij}              \\
+	J_3 & = \frac{1}{3} \sigma_{ij} \sigma_{jk} \sigma_{ki}	\\	
+\end{split}
+\end{equation}
+Le osservazioni sperimentali, specificatamente sui metalli, indicano che la deformazione plastica è indipendente dalla pressione idrostatica. Di conseguenza la funzione di snervamento può scriversi:
+\begin{equation}
+	f(J_2^{'}, J_3^{'}) = k(\kappa)
+\end{equation}
+nella quale $J_2^{'}$ e $J_3^{'}$ sono secondo e terzo invariante delle tensioni deviatoriche:
+\begin{equation}
+	\sigma_{ij}^{'} = \sigma_{ij} - \frac{1}{3} \delta_{ij} \sigma_{kk}
+\end{equation}
+Molti criteri di snervamento sono stati proposti. I due che hanno maggiormente retto il confronto con i dati sperimentali sui metalli sono il criterio di Tresca ed il criterio di Von Mises.
+
+\subsection{Criterio di Tresca (1864)}
+Tale criterio afferma che lo snervamento ha luogo quando la massima tensione tangenziale raggiunge un detrminato valore. Se si indica con $\sigma_1$, $\sigma_2$ e $\sigma_3$  le tensioni principali, allora lo snervamento si ha quando:
+\begin{equation}
+	\sigma_1 - \sigma_3 = Y(\kappa)
+\end{equation}
+
+\subsection{Criterio di Von Mises (1913)}
+Von Mises ha proposto che lo snervamento avvenga quando $J_2^{'}$ raggiunge un detrminato valore critico, cioè:
+\begin{equation}
+	J_2^{'} = k(\kappa)
+\end{equation}
+nella quale k è un parametro specifico del materiale
+
+\subsection{Criterio di Mohr-coulomb (1773)}
+E' una generalizzazione del criterio di resistenza di Coulomb, definito da:
+\begin{equation}
+	\tau = c - \sigma_n \tan \phi
+\end{equation}
+nella quale $\tau$ è la tensione a taglio, $\sigma_n$ è la tensione normale, $c$ è il coefficiente di coesione, $\phi$ il coefficinete di attrito interno.
+
+\subsection{Criterio di Drucker-Prager (1952)}
+Una approssimazione al criterio di Coulomb come modifica al criterio di Von Mises è stata data da Drucker e Prager (1952)
+
+\section{Lavoro e deformazione di incrudimento}
+Dopo lo snervamento iniziale il livello della tensione alla quale si ha deformazione plastica può dipendere dal livello della componete plastica della deformazione. Tale fenomeno è detto lavoro di incrudimento o deformazione incrudente. Ciò comporta che la superficie di snervamento varia col variare della deformazione.
+
+I modelli di superficie di snervamento funzione della deformazione plastica più utilizzati sono quelli di incrudimento isotropo e di incrudimento cinematico. Il modello di materiale  perfettamente plastico è tale per cui la superficie di snervamento risulta costante. Nel caso di incrudimento isotropo la superficie di snervamento si espande conservando la forma. Coll'incrudimento cinematico la superficie di snervamento conserva le sue dimensioni, ma trasla nello spazio delle tensioni.Quest'ultimo tipo di incrudimento, qualora il carico sia ciclico, da luogo all'effetto Bauschinger.
+
+Per taluni tipi di materiale, quali ad esempio i terreni, la deformazione plastica può dar luogo ad un comportamento softning, cioè ad una diminuzione del livello della tensione di snervamento.
+
+L'evoluzione della superficie di snervamento può essere definito ponendo in relazione la tensione di snervamento con la deformazione plastica per mezzo del parametro $\kappa$. Innanzitutto si può pstulare che il lavoro di incrudimento sia funzione del lavoro plastico totale. Quindi:
+\begin{equation}
+	\kappa = W_p
+\end{equation}
+nella quale
+\begin{equation}
+	W_p = \int \sigma_{ij (d \epsilon_{ij})_p}
+\end{equation} 
+essendo $(d \epsilon_{ij})_p$ il differenziale della deformazione plastica.
+
+
+\section{Tensione-deformazione elasto-plastica}
+Raggiunto il livello di snervamento, la deformazione sarà in parte elastica ed in parte plastica. Si assume che la deformazione totale si possa esprimere come somma della componenti elastica e plastica:
+\begin{equation}
+	d \epsilon_{ij} = (d \epsilon_{ij})_e + (d \epsilon_{ij})_p
+\end{equation}
+Decomponendo la tensione in deviatorica ed idrostatica ed utilizzando la relazione tensione deformazione in campo elastico, si ha:
+\begin{equation}
+	(d \epsilon_{ij})_e = \frac{d \sigma_{ij}^{'}}{2 \mu} + \frac{(1-2 \nu)}{E}\delta_{ij} d\sigma_{kk}
+\end{equation}
+nella quale E e $\nu$ sono modulo elastico e coefficiente di Poisson. Al fine di ricavare la relazione tra l'incremento di tensione e la componente plastica della deformazione si assume che l'incremento di deformazione plastica sia proporzionale
+al gradiente della tensione per mezzo di una quantità Q detta potenziale plastico, cosicchè:
+\begin{equation}
+	(d\epsilon_{ij})_p = d \lambda \frac{\partial Q}{\partial \sigma_{ij}}
+\end{equation}
+nella quale la costante d$\lambda$ è detta \textit{moltiplicatore plastico}. L'equazione precedente è detta regola di flusso. 
+Inoltre si assume che:
+\begin{itemize}
+	\item Q funzione di $J_2^{'}$ e $J_3^{'}$
+	\item  $f \equiv Q$
+\end{itemize}
+dando luogo alla cosidetta  \emph{plasticità associata}. E' allora:
+\begin{equation}
+	(d\epsilon_{ij})_p = d \lambda \frac{\partial f}{\partial \sigma_{ij}}
+	\label{eq:plasticity}
+\end{equation}
+che è detta \emph{condizione di normalità}, dato che $\partial f/ \partial \sigma_{ij}$ è un vettore normale alla superficie di snervamento nel punto relativo allo stato di sollecitazione considerato. Nel caso particolare in cui $f = J^{'}_2$ si ha:
+\begin{equation}
+	\frac{\partial f}{\partial \sigma_{ij}} = \frac{\partial J^{'}_2}{\partial \sigma_{ij}} = \sigma_{ij}^{'}
+\end{equation}
+La \ref{eq:plasticity} diventa allora:
+\begin{equation}
+	(d\epsilon_{ij})_p = d \lambda \sigma_{ij}^{'}
+\end{equation}
+la quale è nota come \emph{equazione di Prandtl-Reuss}. Le osservazioni sperimentali confermano che la condizione di normalità è valida nel caso dei metalli. Ciò non è vero nel caso dei terreni.
+Utilizzzando le relazioni  precedenti si perviene alla relazione:
+\begin{equation}
+	d \epsilon_{ij} = \frac{d \sigma_{ij}^{'}}{2 \mu} + \frac{(1-2\nu)}{E} \delta_{ij} d\sigma_{kk}+ d \sigma_{kk} + d \lambda \frac{\partial f}{\partial \sigma_{ij} }
+\end{equation}
+
+\section{Prova monoassiale su materiale strain-hardening}
+si consideri la prova di trazione su un campione di materiale la quale produca la curva $\sigma$  $\epsilon$ seguente:
+Il comportamento è inizialmente elastico lineare con un modulo elastico E sino a che si ha lo snervamento per un valore della tensione pari a $\sigma_Y$. 
+
+Ad un ulteriore incremento della forza esterna il materiale ha un comportamento elastoplastico e tantente alla curva variabile. La pendenza, $E_T$,  prende il nome di modulo tangente elastoplastico.
+
+La funzione di incrudimento può essere espressa mediante la relazione:
+\begin{equation}
+	\bar{\sigma} = H(\epsilon_p)
+\end{equation}
+Differenziando è:
+
+\begin{equation}
+	\frac{d \bar{\sigma}} {d \bar{\epsilon}_p} = H^{'}(\bar{\epsilon}_p) 
+\end{equation}
+Nel caso uniassiale $\sigma_1 = \sigma, \sigma_2=\sigma_3=0$  e dunque:
+\begin{equation}
+	\bar{\sigma} = \sqrt{\frac{3}{2}} \{ \sigma_{ij}^{'} \sigma_{ij}^{'} \}^{1/2} = \sigma
+\end{equation}
+Essendo l'incremento di deformazione plastica $d\epsilon_p =(d\epsilon_1)_p$ ne segue che la deformazione plastica è incomprimibile (coefficiente Poisson = 0.5), $(d\epsilon_2)_p = -\frac{1}{2} d \epsilon_p$ e $(d\epsilon_3)_p = -\frac{1}{2} d \epsilon_p$. 
+
+Dunque:
+\begin{equation}
+	d \bar{\epsilon}_p = \sqrt{\frac{2}{3}} \{ (\epsilon_{ij}^{'})_p (\epsilon_{ij}^{'})_p \}^{1/2} = d \epsilon_p
+\end{equation}
+Sostituendo risulta:
+\begin{equation}
+	H'(\bar{\epsilon}_p) = \frac{d \sigma}{d\epsilon} = \frac{d \sigma}{d \epsilon - d \epsilon_e} = \frac{1}{\frac{d \epsilon}{d \sigma}}
+\end{equation}
+o anche:
+\begin{equation}
+	H^{'} = \frac{E_T}{1- \frac{E_T}{E}}
+\end{equation}
+
+\section{Formulazione matriciale}
+Quanto visto al precedente paragrafo può essere formulato in forma matriciale. La funzione di snervamento è allora:
+\begin{equation}
+	f(\boldsymbol{\sigma})= k(\kappa) 
+\end{equation}
+nella quale $\boldsymbol{\sigma}$ è il vettore delle tensioni e $\kappa$, al solito, è il parametro di incrudimento, il quale controlla la modifica della superficie di snervamento. Per il lavoro di incrudimento è: $d \kappa = \boldsymbol{\sigma}^T d\boldsymbol{\epsilon}_p$, mentre per l'ipotesi di deformazione incrudente è: $d \kappa = d \epsilon_p$. si ha allora:
+\begin{equation}
+	F(\boldsymbol{\sigma}) = f(\boldsymbol{\sigma}) - k(\boldsymbol{\kappa}) = 0
+\end{equation}
+Differenziando è:
+\begin{equation}
+	dF = \frac{\partial F }{\partial \boldsymbol{\sigma}} d \boldsymbol{\sigma} + \frac{\partial F }{\partial \boldsymbol{\kappa}} \boldsymbol{d \kappa}  = 0
+\end{equation}
+o anche:
+\begin{equation}
+	\mathbf{a}^T d \boldsymbol{\sigma} - A d \lambda = 0
+\end{equation}
+
+avendo posto:
+\begin{equation}
+	\mathbf{a}^T = \frac{\partial F}{\partial \boldsymbol{\sigma}} = [\frac{\partial F}{\partial \sigma_x}, \frac{\partial F}{\partial \sigma_y}, \frac{\partial F}{\partial \sigma_z}, \frac{\partial F}{\partial \tau_yz}, \frac{\partial F}{\partial \tau_xy}]
+\end{equation}
+e:
+\begin{equation}
+	A = - \frac{1}{d \lambda} \frac{\partial F}{\partial \kappa} d\kappa
+\end{equation}
+A è detto vettore di flusso. L'espresione della deformazione totale può allora scriversi:
+\begin{equation}
+	d \boldsymbol{\epsilon} = \mathbf{D}^-1 d \boldsymbol{\sigma} + d \lambda \frac{\partial F}{\partial \boldsymbol{\sigma}}
+\end{equation}
+nella quale $\mathbf{D}$ è la matrice delle costanti elastiche. Premoltiplicando l'espressione precedente per $\mathbf{d}_D^T = \mathbf{a}^T \mathbf{D}$ si ha:
+\begin{equation}
+	d \lambda = \frac{1}{[A + \mathbf{a}^T \mathbf{Da}]} \mathbf{a}^T \mathbf{d}_D d \boldsymbol{\epsilon}
+\end{equation}
+Sostituendo quest'ultima nella precedente si ha:
+\begin{equation}
+	d\boldsymbol{\sigma} = \mathbf{D}_{ep} d \boldsymbol{\epsilon}
+\end{equation}
+nella quale:
+\begin{equation}
+	\mathbf{D}_{ep} = \mathbf{D}- \frac{\mathbf{d}_D \mathbf{d}_D^T}{A + \mathbf{d}^T \mathbf{a}} \qquad \boldsymbol{d}_D = \mathbf{Da}
+\end{equation}
+
+Si vuole ora ricavare la forma esplicita del vettore di flusso. Dato che:
+\begin{equation}
+	d\kappa = \boldsymbol{\sigma} ^T d \boldsymbol{\epsilon}_p
+\end{equation}
+e che la funzione di snervamento può essere riscritta nel modo seguente:
+\begin{equation}
+	F(\boldsymbol{\sigma}, \kappa) = f(\boldsymbol{\sigma}) - \sigma_Y(\kappa) = 0
+\end{equation}
+Perciò:
+\begin{equation}
+	A = - \frac{1}{d \lambda} \frac{\partial F}{\partial \kappa} d \kappa = \frac{1}{d \lambda} \frac{d \sigma_Y}{d \kappa} d \kappa
+\end{equation}
+Utilizzando la condizione di normalità si ha:
+\begin{equation}
+	d \kappa = \boldsymbol{\sigma}^T d \boldsymbol{\epsilon}_p = \boldsymbol{\sigma}^T d \lambda \mathbf{a} = d \lambda \boldsymbol{a}^T \boldsymbol{\sigma}
+\end{equation}
+Nel caso monoassiale $\boldsymbol{\sigma}= \bar{\sigma}=\lambda_Y$ e $d \boldsymbol{\epsilon}_p = d \bar{\epsilon}_p$. Si ha perciò: 
+\begin{equation}
+	d \kappa = \sigma_Y d \bar{\epsilon}_p = d \lambda \boldsymbol{a}^T \boldsymbol{\sigma}
+\end{equation}
+Si ha poi:
+\begin{equation}
+	\frac{d \bar{\sigma}}{d \bar{\epsilon}_p} = \frac{d \sigma_Y}{d \bar{\epsilon}_p} = H^{'}
+\end{equation}
+Utilizzando il teorema di Eulero, si può scrivere:
+\begin{equation}
+	\frac{\partial f}{\partial \boldsymbol{\sigma}} \boldsymbol{\sigma} = \sigma_Y
+\end{equation}
+e quindi:
+\begin{equation}
+	\mathbf{a}^T \boldsymbol{\sigma} = \sigma_Y
+\end{equation}
+E dunque:
+\begin{equation}
+	d \lambda = d \bar{\epsilon_p} \qquad A = H^{'}
+\end{equation}
+A rappresenta dunque la pendenza della curva tensione-deformazione uniassiale e può essere determinata sperimentalmente.
+
+\section{Forma alternativa criterio snervamento}
+La funzione di snervamento può essere espressa mediante gli invarianti del deviatore della tensione. Le tensioni principali deviatoriche possono essere ricavate risolvendo l'equazione:
+\begin{equation}
+	t^3 - J_2^{'} t - J^{'}_3 = 0
+\end{equation}
+Per l'identità triginometrica:
+\begin{equation}
+		\sin^3 \theta - \frac{3}{4} \sin \theta + \frac{1}{4} \sin 3 \theta = 0
+\end{equation}
+ponendo: $t= r \sin \theta$ si ha:
+
+\begin{equation}
+	\sin^3 \theta - \frac{J_2^{'}}{r^2} \sin \theta - \frac{J_3^{'}}{r^3} = 0
+\end{equation}
+Dal confronto delle ultime due relazioni si ha:
+\begin{equation}
+	r = \frac{2}{\sqrt{3}}\sqrt{J_2^{'}}
+\end{equation}
+\begin{equation}
+	\sin 3 \theta = \frac{4 J_3^{'}}{r^3} = - 3 \frac{\sqrt{3}}{2} \frac{J_3^{'}}{\sqrt{(J_2^{'})^3}}
+\end{equation}
+
+\[
+\begin{Bmatrix}
+	\sigma_1 \\
+	\sigma_2 \\
+	\sigma_3
+\end{Bmatrix}
+=
+\frac{2\sqrt{J_2^{'}}}{\sqrt{3}}
+\begin{Bmatrix}
+	\sin(\theta + \frac{2 \pi}{3})	\\
+	\sin \theta 					\\
+	\sin(\theta + \frac{4 \pi}{3})
+\end{Bmatrix}
++
+\frac{J_1}{3}
+\begin{Bmatrix}
+	1	\\
+	1	\\
+	1
+\end{Bmatrix}
+\] \\
+\\
+\emph{Criterio di Tresca} 
+\begin{equation}
+	\frac{2}{\sqrt{3}}\sqrt{J_2^{'}} [\sin (\theta + \frac{2 \pi}{3})- \sin(\theta + \frac{4 \pi}{3})]  = Y(\kappa)
+\end{equation}
+
+\begin{equation}
+	2 \sqrt{J^{'}_2} \cos \theta = Y(\kappa) = \sqrt{3} k(\kappa) = \sigma_Y(\kappa)
+\end{equation}\\
+\\
+\emph{Criterio di Von Mises}
+\begin{equation}
+	\sqrt{J^{'}_2} = k(\kappa)
+\end{equation}
+o anche:
+\begin{equation}
+	\sqrt{3 J^{'}_2} = \sigma_Y(\kappa) 
+\end{equation}\\
+\\
+\emph{Criterio di Mohr-coulomb}
+\begin{equation}
+	\frac{1}{3} J_1 \sin \phi + (J_2^{'})^{1/2}(cos \theta -\frac{1}{\sqrt{3}} \sin \theta \sin \phi) = c \cos \phi
+\end{equation} \\
+\\
+\emph{Criterio di Drucker-Prager}
+\begin{equation}
+	\alpha J_1 + (J_2^{'})^{1/2} = k^{'}
+\end{equation}\\
+\\
+Al fine di calcolare la matrice $\mathbf{D}_{ep}$ si esprime il vettore di flusso $\mathbf{a}$ in una forma adatta al calcolo numerico. Si può sempre scrivere:
+\begin{equation}
+	\mathbf{a} =  \frac{\partial F}{\partial \boldsymbol{\sigma}} = \frac{\partial F}{\partial J_1} \frac{\partial J_1}{\partial \boldsymbol{\sigma}} + \frac{\partial F}{\partial (J_2^{'})^{1/2}} \frac{\partial (J_2^{'})^{1/2}}{\partial \boldsymbol{\sigma}} + \frac{\partial F}{\partial \theta} \frac{\partial \theta}{\partial \boldsymbol{\sigma}}
+\end{equation}
+Si può quindi scrivere:
+\begin{equation}
+	\mathbf{a} = C_1 \mathbf{a}_1 + C_2 \mathbf{a}_2 + C_3 \mathbf{a}_3
+\end{equation}
+nella quale:
+\begin{equation}
+	\begin{split}
+		\mathbf{a}_1^T & = \frac{\partial J_1}{\partial \boldsymbol{\sigma}} = 	\{ 1, 1, 1, 0, 0, 0 \}	\\
+		\mathbf{a}_2^T & = \frac{\partial (J_2^{'})^{1/2}}{\partial \boldsymbol{\sigma}} = 	\frac{1}{2(J_2^{'})^{1/2}}\{\sigma_x^{'},  \sigma_y^{'}, \sigma_z^{'}, 2\tau_{yz}, 2\tau_{zx}, 2\tau_{xy} \}			\\
+		\mathbf{a}_3^T & = \frac{\partial J_3}{\partial \boldsymbol{\sigma}} = \{ (\sigma_y^{'} \sigma_z^{'} - \tau_{yz}^2 + \frac{J_2^{'}}{3}), (\sigma_z^{'} \sigma_x^{'} - \tau_{zx}^2 + \frac{J_2^{'}}{3}),   \\
+		               &  (\sigma_x^{'} \sigma_y^{'} - \tau_{xy}^2 + \frac{J_2^{'}}{3}), 2(\tau_{xz} \tau_{xy} - \sigma_x^{'} \tau_{yz} ), \\ & 2(\tau_{zx} \tau_{yz} - \sigma_y^{'} \tau_{zx} ), 2(\tau_{xy} \tau_{zx} - \sigma_z^{'} \tau_{xy}) \}
+	\end{split}
+\end{equation}
+e
+\begin{equation}
+ 	\begin{split}
+ 		C_1 & = \frac{\partial F}{\partial J_1} \\
+ 		C_2 & = (\frac{\partial F}{\partial (J_2^{'})^{1/2}} - \frac{\tan 3 \theta}{(J_2^{'})^{1/2}} \frac{\partial F}{\partial \theta})	\\
+ 		C_3 & = \frac{- \sqrt{3}}{2 \cos 3 \theta} \frac{1}{(J_2^{'})^{3/2}} \frac{\partial F}{\partial \theta}
+ 	\end{split}
+\end{equation}
+
+\section{Problemi in 2D}
+Le espressioni ricavate finora valgono in generale in 3D. In molte situazioni reali si può ragionare, con buona approssimazione, in 2D. Si possono avere le seguenti tipiche situazioni:
+
+\begin{align}
+	\boldsymbol{\sigma}^T = & \{ \sigma_x, \sigma_y, \tau_{xy}   \}           		& \sigma_z = 0   	& \quad \text{Stato piano tensione}		\notag \\
+                            & \{ \sigma_x, \sigma_y, \tau_{xy}, \sigma_z  \}  		& \epsilon_z = 0 	& \quad \text{Stato piano deformazione}	\notag \\
+                            & \{ \sigma_r, \sigma_z, \tau_{rz}, \sigma_{\theta}  \} &					&										\notag \\
+\end{align}
+La matrice della relazione tensione deformazione è:
+\begin{equation}
+	\mathbf{D} = \frac{E(1- \nu)}{(1 + \nu)(1-2\nu)}
+	\begin{bmatrix}
+		1                      	& \frac{\nu}{(1 - \nu)}	& 0 							& \vdots & \frac{\nu}{1 - \nu}  	\\
+		\frac{\nu}{(1 - \nu)}  	& 1                    	& 0 							& \vdots & \frac{\nu}{(1 - \nu)}	\\
+		0					   	& 0						& \frac{1 - 2 \nu}{2(1-\nu)} 	& \vdots & 0						\\
+		\hdotsfor{3} \\
+		\frac{\nu}{1 - \nu}		& \frac{\nu}{(1 - \nu)}	& 0								&        & 1
+	\end{bmatrix}
+\end{equation}
+per stati piani di deformazione e assialsimmetrici. Mentre per stati oiani di tensione:
+
+\begin{equation}
+	\mathbf{D} = \frac{E}{(1-\nu^2)}
+	\begin{bmatrix}
+		1	&	\nu	&	0					&	\vdots		&	0	\\
+		\nu	&	1	&	0					&	\vdots		&	0	\\
+		0	&	0	&	\frac{1 - \nu}{2}	&	\vdots		&	0	\\
+		\hdotsfor{3} 												\\
+		0	&	0	&	0					&				&	1		
+	\end{bmatrix}
+\end{equation}
+per stati piano di tensione. Il vettore di flusso diventa:
+\begin{equation}
+	\mathbf{a} = \{ \frac{\partial F}{\partial \sigma_x},  \frac{\partial F}{\partial \sigma_y}, \frac{\partial F}{\partial \tau_{xy}}, \frac{\partial F}{\partial \sigma_z} \}
+\end{equation}
+In 2D si ha:
+\begin{equation}
+	\begin{split}
+		\mathbf{a}_1^T & = \{ 1, 1, 0, 1 \}	\\
+		\mathbf{a}_2^T & = \frac{1}{2(J_2^{'})^{1/2}}\{\sigma_x^{'},  \sigma_y^{'}, 2\tau_{xy}, \sigma_z^{'}\}			\\
+		\mathbf{a}_3^T & = \{ (\sigma_y^{'} \sigma_z^{'} + \frac{J_2^{'}}{3}), (\sigma_z^{'} \sigma_x^{'} + \frac{J_2^{'}}{3}), -2 \sigma_z^{'} \tau_{xy}, (\sigma_x^{'} \sigma_y^{'} - \tau_{xy}^2 + \frac{J_2^{'}}{3}) \}
+	\end{split}
+\end{equation}
+e gli invarianti delle tensioni deviatoriche diventano:
+\begin{align}
+	J_2^{'} & =	\frac{1}{2}( {\sigma_x^{'}}^2 + {\sigma_y^{'}}^2 + {\sigma_z^{'}}^2) + \tau_{xy}^2	\notag \\
+	J_3^{'} & = \sigma_z^{'} ((\sigma_z^{'})^2  - J_2^{'})    
+\end{align}
+Al fine del calcolo della matrice $\mathbf{D}_{ep}$ l'elemento $\mathbf{d}_D$, per problemi in stato piano di deformazione e assialsimmetrici, è:
+\[
+\mathbf{d}_D =
+\begin{Bmatrix}
+	d_1 \\
+	d_2 \\
+	d_3 \\
+	d_4
+\end{Bmatrix}
+=
+\begin{Bmatrix}
+	\frac{E}{1 + \nu}a_1 + M_1 \\
+	\frac{E}{1 + \nu}a_2 + M_1 \\
+	Ga_3 \\
+	\frac{E}{1 + \nu}a_4 + M_1
+\end{Bmatrix}
+\]
+nella quale $M_1 = \frac{E\nu(a_1+a_2+a_4)}{(1+\nu)(1-2\nu)}$ e $G=\frac{E}{2(1+\nu)}$.
+
+Nel caso di stato piano di tensione si ha:
+\[
+\mathbf{d}_D =
+\begin{Bmatrix}
+	d_1 \\
+	d_2 \\
+	d_3 \\
+	d_4
+\end{Bmatrix}
+=
+\begin{Bmatrix}
+	\frac{E}{1 + \nu}a_1 + M_2 \\
+	\frac{E}{1 + \nu}a_2 + M_2 \\
+	Ga_3 \\
+	\frac{E}{1 + \nu}a_4 + M_2
+\end{Bmatrix}
+\]
+essendo: $M_2 = \frac{E\nu(a_1+a_2)}{1-\nu^2}$.
+
+\section{Punti singolari}
+Per talune superfici di snervamento il vettore di flusso $\mathbf{a}$, per talune combinazioni dello stato di tensione non è univocamente definito. Ad evitare le difficoltà numeriche che ne possono conseguire, si utilizzano le espressioni iniziali di Tresca e Mohr-Coulomb, quando $\theta = \ang{30}$
+
+\emph{Criterio di Tresca}
+\begin{equation}
+	\sqrt{3}(J_2^{'})^{1/2} = Y(\kappa) = \sqrt{3} k(\kappa)
+\end{equation}
+e perciò:
+\begin{equation}
+	C_1=0, \quad C_2=\sqrt{3}, C_3=0 \quad per \quad \theta = \pm \ang{30}
+\end{equation}
+
+\emph{Criterio Mohr-Coulomb}
+\begin{align}
+	C_1 & = \frac{1}{3} \sin \phi, & C_2 = \frac{1}{2}(\sqrt{3} - \frac{\sin \phi}{\sqrt{3}} ), & C_3 = 0, per \quad \theta = \ang{30}	\notag \\
+	C_1 & = \frac{1}{3} \sin \phi, & C_2  = \frac{1}{2}(\sqrt{3} + \frac{\sin \phi}{\sqrt{3}} ), & C_3 = 0, per \quad \theta = - \ang{30}
+\end{align}
+
+\section{Formulazione agli elementi finiti}
+
+
