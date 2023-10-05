@@ -1,30 +1,47 @@
-\chapter{Analisi Dinamica}		
-Molte strutture sono soggette a carichi variabili nel tempo, quali ad esmpio impulsi, scoppi, urti o azioni sismiche. Si vuole qui di seguito tratttare il metodo degli elementi finiti nella soluzione di tali problemi.
+\chapter{Analisi Dinamica}
 
-Sebbene si sia proposto da parte di alcuni autori l'uso della sovrapposizione modale nella trattazione di problemi dinamici non lineari, è pratica diffusa l'utilizzo di procedure di integrazione al passo. Tali tecniche di integrazione sono classificate in metodi espliciti ed impliciti.
+Molte strutture sono soggette a carichi variabili nel tempo, quali ad esmpio impulsi, scoppi, 
+urti o azioni sismiche. Si vuole qui di seguito tratttare il metodo degli elementi finiti 
+nella soluzione di tali problemi.
+
+Sebbene si sia proposto da parte di alcuni autori l'uso della sovrapposizione modale nella trattazione
+di problemi dinamici non lineari, è pratica diffusa l'utilizzo di procedure di integrazione al passo. 
+Tali tecniche di integrazione sono classificate in metodi espliciti ed impliciti.
 
 Si considerano dapprima il molto popolare, e facile da implementare, schema delle differenze centrali.
-In questo caso ad ogni passo, si ha un relativamente piccolo sforzo computazionale e non risulta necessario la fattorizzazione delle matrici.
+In questo caso ad ogni passo, si ha un relativamente piccolo sforzo computazionale e non risulta 
+necessario la fattorizzazione delle matrici.
 
 Tale schema è però condizionamente stabile e richiede quindi un passo temporale piuttosto piccolo.
-Gli schemi impliciti richiedono la fattorizzazione della matrice di rigidezza ma, essendo incondizionamente stabili, consentono di utilizzare passi temporali più lunghi, a meno di considerazioni di accuratezza. In particolare si considereranno gli schemi della famiglia di Newmark.
+Gli schemi impliciti richiedono la fattorizzazione della matrice di rigidezza ma, essendo 
+incondizionamente stabili, consentono di utilizzare passi temporali più lunghi, a meno di 
+considerazioni di accuratezza. In particolare si considereranno gli schemi della famiglia di Newmark.
 
-Il programma di calcolo di analisi dinamica non lineare presentato consente di selezionare uno qualunque dei seguenti algoritmi:
+Il programma di calcolo di analisi dinamica non lineare presentato consente di selezionare 
+uno qualunque dei seguenti algoritmi:
 \begin{itemize}
 	\item an implicit solution
 	\item an explicit solution
 	\item a combined implicitfexplicit solution
 \end{itemize}
 
-Il programma consente di trattare problemi in stato piano di tensione, in stato piano di deformazione e assialsimmetrici, consentendo di utilizzare elementi quadrilatri a 4, 8 e 9 nodi isoparametrici. E' presa in considerazione la non linearità per geometria utilizzzando la formulazione Lagrangiana totale, mentre per il materiale si considera un comportamento elastoplastico
+Il programma consente di trattare problemi in stato piano di tensione, in stato piano di deformazione
+e assialsimmetrici, consentendo di utilizzare elementi quadrilatri a 4, 8 e 9 nodi isoparametrici. 
+E' presa in considerazione la non linearità per geometria utilizzzando la formulazione Lagrangiana totale,
+mentre per il materiale si considera un comportamento elastoplastico
 
 \section{Equazione equilibrio dinamico}
-L'equazione di equilibrio dinamico può essere ricavata a partire dal teorema dei lavori virtuali scritto a partire da un qualunque istante $t_n$ e a prescindere dal legame costitutivo del materiale: 
+L'equazione di equilibrio dinamico può essere ricavata mediante il teorema dei lavori virtuali 
+scritto a partire da un qualunque istante $t_n$ e a prescindere dal legame costitutivo del materiale: 
 \begin{equation}
-	\int_\varOmega [\delta\boldsymbol{\epsilon}_n]^T \boldsymbol{\sigma}_nd\varOmega - \int_\varOmega[\delta\boldsymbol{u}_n]^T[\boldsymbol{b}_n-\rho_n\boldsymbol{\ddot{u}}_n-c_n\boldsymbol{\dot{u}}_n]d\varOmega - 
+	\int_\varOmega [\delta\boldsymbol{\epsilon}_n]^T \boldsymbol{\sigma}_nd\varOmega - \int_\varOmega[\delta\boldsymbol{u}_n]^T[\boldsymbol{b}_n-\rho_n\boldsymbol{\ddot{u}}_n-c_n \boldsymbol{\dot{u}}_n]d\varOmega - 
 	\int_{\varGamma_t}[\delta\boldsymbol{u}_n]^T \boldsymbol{t}_n d\varGamma=0
 \end{equation}
-nella quale $\delta\boldsymbol{u}_n$ è il vettore degli spostamenti virtuali, $\delta\boldsymbol{\epsilon}_n$ è il corrispondente vettore delle deformazioni virtuali, $\boldsymbol{b}_n$ è il vettore delle forze di volume, $\boldsymbol{t}_n$ è il vettore delle forze di superficie, $\boldsymbol{\sigma}_n$ è il vettore delle tensioni, $\rho_n$ è la densità,  $\boldsymbol{c}_n$ è lo smorzamento, mentre $\dot{u}$ e $\ddot{u}$ sono, rispettivamente, i vettori velocità ed accelerazione.
+nella quale $\delta\boldsymbol{u}_n$ è il vettore degli spostamenti virtuali, $\delta\boldsymbol{\epsilon}_n$ 
+è il corrispondente vettore delle deformazioni virtuali, $\boldsymbol{b}_n$ è il vettore 
+delle forze di volume, $\boldsymbol{t}_n$ è il vettore delle forze di superficie, 
+$\boldsymbol{\sigma}_n$ è il vettore delle tensioni, $\rho_n$ è la densità,  $\boldsymbol{c}_n$ 
+è lo smorzamento, mentre $\dot{u}$ e $\ddot{u}$ sono, rispettivamente, i vettori velocità ed accelerazione.
 
 L'approssimazione agli elementi finiti degli spostamenti è data da:
 \begin{equation}
@@ -37,20 +54,28 @@ L'approssimazione agli elementi finiti degli spostamenti è data da:
 	\delta\boldsymbol{\epsilon}_n = \sum_{i=1}^m \boldsymbol{B}_i[\delta\boldsymbol{d_i}]_n
 \end{equation}
 
-nella quale il pedice n sta ad indicare l'ennesimo passo temporale, $[\textbf{\textit{d}}_i]_n$ è il vettore degli spostamenti nodali, $[\delta\boldsymbol{d}_i]_n$ è il vettore degli spostamenti virtuali, \textbf{N}\ped{i} = N\ped{i}\textbf{I}\ped{2} è la matrice delle funzioni di forma, \textbf{[B]}\ped{i} è la matrice degli deformazione-spostamenti globale. \textit{m} è il numero totale dei nodi.
+nella quale il pedice n sta ad indicare l'ennesimo passo temporale, $[\textbf{\textit{d}}_i]_n$ 
+è il vettore degli spostamenti nodali, $[\delta\boldsymbol{d}_i]_n$ è il vettore degli 
+spostamenti virtuali, \textbf{N}\ped{i} = N\ped{i}\textbf{I}\ped{2} è la matrice delle funzioni di forma,
+$\textbf{B}_{i}$ è la matrice degli deformazione-spostamenti globale. \textit{m} 
+è il numero totale dei nodi.
 
-Sostituendo (10.2) e (10.3) in (10.1) e, visto che l'equazione vale per un qualsiasi spostamento virtuale $[\delta\boldsymbol{d}_i]_n$, si può scrivere per ciascun nodo:
+Sostituendo (10.2) e (10.3) in (10.1) e, visto che l'equazione vale per un qualsiasi 
+spostamento virtuale $[\delta\boldsymbol{d}_i]_n$, si può scrivere per ciascun nodo:
 \begin{equation}
 	[\boldsymbol{p}\ped{i}]\ped{n}-[\boldsymbol{f}\ped{Bi}]\ped{n}+[\boldsymbol{f}\ped{Ii}]\ped{n}+[\boldsymbol{f}\ped{Di}]\ped{n}-[\boldsymbol{f}\ped{Ti}]\ped{n}=\textbf{0}
 \end{equation}
+
 nella quale le forze interne sono date da:
 \begin{equation}
 	[\boldsymbol{p}\ped{i}]\ped{n} = \int_\varOmega[\boldsymbol{B_i}]^T\boldsymbol{\sigma}d\varOmega
 \end{equation}
+
 le forze di volume da:
 \begin{equation}
 	[\boldsymbol{f}\ped{Bi}]\ped{n} = \int_\varOmega[\boldsymbol{N_i}]^T\boldsymbol{b}\ped{n}\varOmega
 \end{equation}
+
 le forze di inerzia da:
 \begin{equation}
 	\begin{split}
@@ -88,11 +113,18 @@ Le forze di superficie invece sono date da:
 \begin{equation}
 	[\boldsymbol{f}\ped{Ti}]\ped{n} = \int_\varGamma[\boldsymbol{N}_i]^T \boldsymbol{t}_n d\varGamma
 \end{equation}
-E' possibile suddividere il dominio in elementi ed in ciascuno di essi utiizzare elementi isoparamterici C(0). Si possono quindi valutare separatamente le quantità in (4) per ciascun elemento e quindi assemblarle nella matrice globale. Gli spostamenti in ciascun elemento si esprimono nel modo seguente:
+
+E' possibile suddividere il dominio in elementi ed in ciascuno di essi utiizzare elementi 
+isoparamterici C(0). Si possono quindi valutare separatamente le quantità in (4) per ciascun 
+elemento e quindi assemblarle nella matrice globale. Gli spostamenti in ciascun elemento 
+si esprimono nel modo seguente:
 \begin{equation}
 	[u^{(e)}]_n= \sum_{i=1}^{r}\boldsymbol{N}_i^{(e)}[\boldsymbol{d}_i^{(e)}]_n
 \end{equation}
-nella quale per il nodo locale \textit{i} dell'elemento \textit{e} $\boldsymbol{N}_i^{(e)}=N_i^{(e)}\boldsymbol{I}_2$ è la funzione di forma e $[\boldsymbol{d}_i^{(e)}]_n$ è il vettore degli spostamenti nodali. Nel seguito si considereranno elementi isoparametrici a 4, 8 e 9 nodi, cioè $\textit{r}=4,8 e 9$.
+
+nella quale per il nodo locale \textit{i} dell'elemento $\textit{e}$ $\boldsymbol{N}_i^{(e)}=N_i^{(e)}\boldsymbol{I}_2$ 
+è la funzione di forma e $[\boldsymbol{d}_i^{(e)}]_n$ è il vettore degli spostamenti nodali. 
+Nel seguito si considereranno elementi isoparametrici a 4, 8 e 9 nodi, cioè $\textit{r}=4,8 e 9$.
 
 La relazione deformazione spostamento a livello di singolo elemento si esprime nel modo seguente:
 \begin{equation}
@@ -118,26 +150,34 @@ L'elemento di volume è dato da:
 
 
 \section{Metodi espliciti}
-L'equazione del moto può scriversi\footnote{nella quale $-\boldsymbol{M \ddot{u}_g}$ dovuto all'azione sismica è incluso nelle forze di volume $\boldsymbol{f}_n$}:
+L'equazione del moto può scriversi\footnote{nella quale $-\boldsymbol{M \ddot{u}_g}$ 
+dovuto all'azione sismica è incluso nelle forze di volume $\boldsymbol{f}_n$}:
 \begin{equation}
 	\boldsymbol {M\ddot d}_n + \boldsymbol C \boldsymbol{\dot d}_n + \boldsymbol{p}_n = \boldsymbol{f}_n
 	\label{eq:moto}
 \end{equation}
-essendo $\boldsymbol{M}$ e $\boldsymbol{C}$ rispettivamente le matrice di massa smorzamento globali,  $\boldsymbol{p}_n$ il vettore globale delle forze interne ed $\boldsymbol{f}_n$ il vettore globale equivalente alle forze di volume e di superficie. $\boldsymbol{\ddot d}_n$ e $\boldsymbol{\dot d}_n$ sono, ripsettivamente, accelerazione e velocità nodali.
+essendo $\boldsymbol{M}$ e $\boldsymbol{C}$ rispettivamente le matrice di massa smorzamento globali,  
+$\boldsymbol{p}_n$ il vettore globale delle forze interne ed $\boldsymbol{f}_n$ il vettore globale 
+equivalente alle forze di volume e di superficie. $\boldsymbol{\ddot d}_n$ e $\boldsymbol{\dot d}_n$ 
+sono, ripsettivamente, accelerazione e velocità nodali.
 
 \subsection{Approssimazione alle differenze centrali}
-Oltre alla discretizzazione spaziale occorre considerare anche la discretizzazione temporale. Si considera una discretizzazione temporale delle equazioni di equilibrio approssimando velocità ed accelerazione utilizando espressioni alle differenze finite. In particolare si considera una approssimazione alle differenze centrali, cosicchè si ha:
+Oltre alla discretizzazione spaziale occorre considerare anche la discretizzazione temporale. 
+Si considera una discretizzazione temporale delle equazioni di equilibrio approssimando 
+velocità ed accelerazione utilizando espressioni alle differenze finite. 
+In particolare si considera una approssimazione alle differenze centrali, cosicchè si ha:
 \begin{equation}
 	\boldsymbol{\ddot{d}}_n \simeq \boldsymbol{a}_n = \frac{1}{(\varDelta)^2} \{\boldsymbol{d}_{n+1} -2 \boldsymbol{d}_n + \boldsymbol{d}_{n-1}\}
 	\label{eq:acceleration}
 \end{equation}
+
 mentre le velocità sono date da:
 \begin{equation}
 	\boldsymbol{\dot{d}}_n \simeq \boldsymbol{v}_n = \frac{1}{(2\varDelta)} \{\boldsymbol{d}_{n+1} + \boldsymbol{d}_{n-1}\}
 	\label{eq:velocity}
 \end{equation}
-nella quale $\Delta t$ è il passo temporale. 
 
+nella quale $\Delta t$ è il passo temporale. 
 Sostituendo \ref{eq:acceleration} e \ref{eq:velocity} in \ref{eq:moto} si ha:
 \begin{equation}
 	\boldsymbol{M} \{ \frac{\boldsymbol{d}_{n+1} -2 \boldsymbol{d}_n + \boldsymbol{d}_{n-1}} {(\Delta t)^2} \} -
@@ -159,9 +199,11 @@ Cioè:
 	\label{eq:displacement}
 \end{equation}
 
-Gli spostamenti al passo $t_n + \varDelta t$ sono quindi ottenuti esplicitamente in funzione degli spostamenti all'istante $t_n$ e $t_n - \varDelta t$.
+Gli spostamenti al passo $t_n + \varDelta t$ sono quindi ottenuti esplicitamente in funzione 
+degli spostamenti all'istante $t_n$ e $t_n - \varDelta t$.
 
-Se le matrici di massa \textbf{M} e smorzamento \textbf{C} sono diagonali, risolvere la \ref{eq:displacement} risulta semplice. Nel caso di stato piano si hanno le soluzioni:
+Se le matrici di massa \textbf{M} e smorzamento $\textbf{C}$ sono diagonali, risolvere la 
+$\ref{eq:displacement}$ risulta semplice. Nel caso di stato piano si hanno le soluzioni:
 \begin{equation} 
 	\begin{split}
 		(d_{ui})_{n+1} = & (m_{ii} + \frac{\varDelta t}{2} c_{ii})^{-1} [(\varDelta t)^2 \{ - (p_{ui})_n + (f_{ui})_n \} + \\ 
@@ -169,6 +211,7 @@ Se le matrici di massa \textbf{M} e smorzamento \textbf{C} sono diagonali, risol
 	\end{split}
 	\label{eq:dispx} 
 \end{equation}
+
 e
 \begin{equation} 
 	\begin{split}
@@ -176,19 +219,29 @@ e
 		&2 m_{ii} (d_{vi})_n - (m_{ii} - \frac{\varDelta t}{2} c_{ii}) (d_{vi})_{n-1} ]
 	\end{split} 
 \end{equation}
-nelle quali al nodo $i$, $d_{ui}$ e $d_{vi}$ sono le componenti di spostamento \textit{u} e \textit{v} nelle direzioni \textit{x} e \textit{y}, $f_{ui}$ e $f_{vi}$ sono le componenti equivalenti delle forze esterne,  $p_{ui}$ e $p_{vi}$ sono le forze nodali equivalenti allo stato di tensione interno mentre $m_{ii}$ e $c_{ii}$ sono i termini diagonali delle matrici di massa e smorzamento. Nel caso di problemi assialsimmetrici occorre sostituire \textit{v} con \textit{w}.
+nelle quali al nodo $i$, $d_{ui}$ e $d_{vi}$ sono le componenti di spostamento $\textit{u}$ 
+e $\textit{v}$ nelle direzioni $\textit{x}$ e $\textit{y}$, $f_{ui}$ e $f_{vi}$ sono 
+le componenti equivalenti delle forze esterne,  $p_{ui}$ e $p_{vi}$ sono le forze nodali
+equivalenti allo stato di tensione interno mentre $m_{ii}$ e $c_{ii}$ sono i termini diagonali
+delle matrici di massa e smorzamento. Nel caso di problemi assialsimmetrici 
+occorre sostituire \textit{v} con \textit{w}.
 
 \subsection{Algoritmo di avvio}
-Come visto precedentemente, la soluzione all'istante $t_n + \varDelta t$ è ottenuta utilizzando i valori ottenuti agli istanti $t_n$ e $t_n - \varDelta t$. Per poter dare avvio all'algoritmo delle differenze centrali è perciò necessario conoscere $\boldsymbol{d}(0-\varDelta t)$.
+Come visto precedentemente, la soluzione all'istante $t_n + \varDelta t$ è ottenuta 
+utilizzando i valori ottenuti agli istanti $t_n$ e $t_n - \varDelta t$. 
+Per poter dare avvio all'algoritmo delle differenze centrali è perciò necessario
+conoscere $\boldsymbol{d}(0-\varDelta t)$.
 
 Essendo:
 \begin{equation}
 	 \boldsymbol{\dot{d}}(0) \simeq \boldsymbol{v}(0) = \frac{\boldsymbol{d}(0 + \varDelta t) - \boldsymbol{d}(0 - \varDelta t)}{2 \varDelta t}
 \end{equation}
+
 e quindi:
 \begin{equation}
 	\boldsymbol{d}(0 - \varDelta t) = -2\varDelta t \boldsymbol{v}(0) + \boldsymbol{d}(0 + \varDelta t)
 \end{equation}
+
 Sostituendo in \ref{eq:dispx} si ha:
 \begin{equation} 
 	\begin{split}
@@ -196,29 +249,39 @@ Sostituendo in \ref{eq:dispx} si ha:
 		&2 m_{ii} (d_{ui})_0 - (m_{ii} - \frac{\varDelta t}{2} c_{ii}) \{-2 \varDelta t (d_{ui})_0 + (d_{ui})_1 \} ]
 	\end{split} 
 \end{equation}
+
 o anche:
 \begin{equation}
 		(d_{ui})_1 = \frac{(\varDelta t)^2}{2 m_{ii}} \{ -(p_{ui})_0 + (f_{ui})_0 \} + (d_{ui})_0 + B\varDelta t (d_{ui})_0
 \end{equation}
+
 avendo posto:
 \begin{equation*}
 	B = 1- \frac{c_{ii}\varDelta t}{2m_{ii}}
 \end{equation*}
 
 \subsection{Smorzamento}
-I dati a disposizione per quanto riguarda le caratteristiche di smorzamento dei materiali sono piuttosto limitati, e ancora di più lo sono in campo lineare. E' prassi quindi assumere l'ipotesi di Rayleigh, che cioè la matrice di smorzamento sia una combinazione lineare delle matrici di rigidezza e di massa:
+I dati a disposizione per quanto riguarda le caratteristiche di smorzamento dei materiali
+sono piuttosto limitati, e ancora di più lo sono in campo lineare. E' prassi quindi assumere
+l'ipotesi di Rayleigh, che cioè la matrice di smorzamento sia una combinazione lineare
+delle matrici di rigidezza e di massa:
 \begin{equation}
 	\boldsymbol{C} = \alpha \boldsymbol{M} + \beta \boldsymbol{K}
 \end{equation}
+
 Qualora si utilizzi il metodo delle differenze centrali, assumendo $\beta = 0$ e quindi:
 \begin{equation}
 	\boldsymbol{C} = \alpha \boldsymbol{M}
 \end{equation}
+
 o anche:
 \begin{equation*}
 	c_{ii} = \alpha m_{ii}
 \end{equation*}
-nella quale $\alpha = 2 \xi_{r} \omega_{r} $, essendo $\xi_{r}$ ed $\omega_{r}$ il fattore di smorzamento e la frequenza circolare dell' $r^{th}$ modo di vibrare. Questa modellazione è piuttosto povera ma presenta una buona efficienza computazionale.
+
+nella quale $\alpha = 2 \xi_{r} \omega_{r} $, essendo $\xi_{r}$ ed $\omega_{r}$ il 
+fattore di smorzamento e la frequenza circolare dell' $r^{th}$ modo di vibrare. 
+Questa modellazione è piuttosto povera ma presenta una buona efficienza computazionale.
 
 \subsection{Dimensione passo temporale}
 Sia che si utilizzi uno schema esplicito che uno implicito, la scelta del passo temporale è cruciale.
@@ -227,12 +290,16 @@ Sia che si utilizzi uno schema esplicito che uno implicito, la scelta del passo 
 \section{Metodi impliciti}
 
 \subsection{Algoritmo di Newmark}
-Si descrive ora la forma predictor-corrector dello schema di Newmark. All'istante $t_n + \varDelta t$ l'equazione di equilibrio è:
+Si descrive ora la forma predictor-corrector dello schema di Newmark. 
+All'istante $t_n + \varDelta t$ l'equazione di equilibrio è:
 \begin{equation}
 	\boldsymbol{M a}_{n+1} +\boldsymbol{p}_{n+1} = \boldsymbol{f}_{n+1}
 	\label{eq:equilibrio}
 \end{equation}
-nella quale $\boldsymbol{M}$, $\boldsymbol{a}_{n+1}$, $\boldsymbol{p}_{n+1}$ e $\boldsymbol{f}_{n+1}$ sono, rispettivamente, la matrice delle masse, l'accelerazione, il vettore delle forze interne (il quale dipende, in generale, dagli spostamenti $\boldsymbol{d}_{n+1}$, e velocità $\boldsymbol{\dot{d}}_{n+1}$ nodali e dalla loro storia) e dal vettore delle forze applicate.
+nella quale $\boldsymbol{M}$, $\boldsymbol{a}_{n+1}$, $\boldsymbol{p}_{n+1}$ e $\boldsymbol{f}_{n+1}$ sono, 
+rispettivamente, la matrice delle masse, l'accelerazione, il vettore delle forze interne
+(il quale dipende, in generale, dagli spostamenti $\boldsymbol{d}_{n+1}$, 
+e velocità $\boldsymbol{\dot{d}}_{n+1}$ nodali e dalla loro storia) e dal vettore delle forze applicate.
 
 Siano:
 \begin{equation}
@@ -261,9 +328,12 @@ nelle quali:
 \begin{equation}
 	 \boldsymbol{\tilde{v}}_{n+1} = \boldsymbol{v}_n + \varDelta t (1 - \gamma) \boldsymbol{a}_n 
 \end{equation}
-E' da notare che $\boldsymbol{d}_n$, $\boldsymbol{v}_n$ e $\boldsymbol{a}_n$ sono approssimate da $\boldsymbol{d}(t_n)$, $\boldsymbol{\dot{d}}(t_n)$ e $\boldsymbol{\ddot{d}}(t_n)$ mentre $\beta$ e $\gamma$ sono parametri che consentono di controllare stabilità ed accuratezza.
+E' da notare che $\boldsymbol{d}_n$, $\boldsymbol{v}_n$ e $\boldsymbol{a}_n$ 
+sono approssimate da $\boldsymbol{d}(t_n)$, $\boldsymbol{\dot{d}}(t_n)$ e $\boldsymbol{\ddot{d}}(t_n)$ 
+mentre $\beta$ e $\gamma$ sono parametri che consentono di controllare stabilità ed accuratezza.
 
-Le quantità $\boldsymbol{\tilde{d}}_{n+1}$ e $\boldsymbol{\tilde{v}}_{n+1}$ sono i valori predictor, mentre $\boldsymbol{d}_{n+1}$ e $\boldsymbol{v}_{n+1}$ sono i valori corrector. 
+Le quantità $\boldsymbol{\tilde{d}}_{n+1}$ e $\boldsymbol{\tilde{v}}_{n+1}$ sono i valori predictor, 
+mentre $\boldsymbol{d}_{n+1}$ e $\boldsymbol{v}_{n+1}$ sono i valori corrector. 
 
 Spostamenti e velocità iniziali sono noti, è possibile perciò calcolare le accelerazioni all'istante $t_0$:
 \begin{equation}
@@ -301,11 +371,14 @@ Spostamenti e velocità iniziali sono noti, è possibile perciò calcolare le ac
 \end{table}
 	  
 \subsection{Algoritmo predictor-corrector}
-Consideriamo ora un algoritmo 'esplicito' associato all'algoritmo di Newmark descritto precedentemente. Si assume che la matrice delle masse $\boldsymbol{M}$ sia diagonale. E' da notare che il calcolo basato sull'espressione:
 
+Consideriamo ora un algoritmo 'esplicito' associato all'algoritmo di Newmark descritto precedentemente. 
+Si assume che la matrice delle masse $\boldsymbol{M}$ sia diagonale. 
+E' da notare che il calcolo basato sull'espressione:
 \begin{equation}
 	\boldsymbol{M a}_{n+1} + \boldsymbol{p} (\tilde{\boldsymbol{d}}_{n+1}, \tilde{\boldsymbol{v}}_{n+1}) = \boldsymbol{f}_{n+1}
 \end{equation}
+
 è di tipo esplicito in quanto i valori corrector sono noti, essendo stati calcolati al passo precedente. Dato che si vuole combinare gli algoritmi esplicito ed implicito, si organizza la soluzione del metodo esplicito in modo simile a quello implicito.
 
 \begin{table}
@@ -340,14 +413,17 @@ Consideriamo ora un algoritmo 'esplicito' associato all'algoritmo di Newmark des
 \section{Algoritmo implicito-esplicito}
 
 \subsection{Introduzione}
-Si combinano ora i metodi descritti nei precedenti paragrafi, visto che la mesh degli elementi finiti è costituita da due gruppi: il gruppo degli elementi impliciti ed il gruppo degli elementi espliciti. Gli indici I ed E da ora in poi indicheranno, rispettivamente, il gruppo degli elementi impliciti e ed espliciti.
+Si combinano ora i metodi descritti nei precedenti paragrafi, visto che la mesh degli elementi finiti
+è costituita da due gruppi: il gruppo degli elementi impliciti ed il gruppo degli elementi espliciti. 
+Gli indici I ed E da ora in poi indicheranno, rispettivamente, 
+il gruppo degli elementi impliciti e ed espliciti.
 
 Con l'algoritmo implicito-esplicito si itera ad ogni passo in modo da soddisfare l'equazione:
 \begin{equation}
 	\boldsymbol{M a}_{n+1} + \boldsymbol{p}^I(\boldsymbol{d}_{n+1}, \boldsymbol{v}_{n+1}) + \boldsymbol{p}^E(\tilde{\boldsymbol{d}}_{n+1}, \tilde{\boldsymbol{v}}_{n+1}) = \boldsymbol{f}_{n+1}
 \end{equation}
-nella quale $\boldsymbol{M}$ = $\boldsymbol{M}^I$ + $\boldsymbol{M}^E$ e $\boldsymbol{f}_{n+1}$ = $\boldsymbol{f}_{n+1}^I$ + $\boldsymbol{f}_{n+1}^E$. 
 
+nella quale $\boldsymbol{M}$ = $\boldsymbol{M}^I$ + $\boldsymbol{M}^E$ e $\boldsymbol{f}_{n+1}$ = $\boldsymbol{f}_{n+1}^I$ + $\boldsymbol{f}_{n+1}^E$. 
 Da notare che si assume $\boldsymbol{M}^E$ diagonale.
 
 \subsection{Struttura matrice di rigidezza effettiva}
@@ -413,8 +489,8 @@ nella quale $\boldsymbol{D}_{n+1}$ è la matrice del legame costitutivo ed $\bol
 	    \tau_{xy} \mathbf{I}_2 & \sigma_y  \mathbf{I}_2                
 	\end{bmatrix}_{n+1}
 \end{equation}
-per stati piani di tensione e deformazione e da:
 
+per stati piani di tensione e deformazione e da:
 \begin{equation}
 	\boldsymbol{S}_{n+1} = 
 	\begin{bmatrix}
